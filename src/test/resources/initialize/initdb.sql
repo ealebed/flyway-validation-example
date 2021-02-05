@@ -1,0 +1,5 @@
+CREATE USER ro_user;
+CREATE USER test;
+
+CREATE DATABASE database_01;
+CREATE DATABASE database_02;
