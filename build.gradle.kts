@@ -11,7 +11,7 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
     testImplementation("org.flywaydb:flyway-core:9.1.6")
-    testImplementation("org.postgresql:postgresql:42.4.2")
+    testImplementation("org.postgresql:postgresql:42.5.0")
     testImplementation("org.slf4j:slf4j-simple:2.0.0")
     testImplementation("org.testcontainers:junit-jupiter:${testcontainersVersion}")
     testImplementation("org.testcontainers:postgresql:${testcontainersVersion}")
