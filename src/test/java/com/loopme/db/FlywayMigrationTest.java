@@ -8,7 +8,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 public class FlywayMigrationTest {
-    private static final String DOCKER_IMAGE = "postgres:13";
+    private static final String DOCKER_IMAGE = "postgres:14";
     private static final String DB_NAME = "postgres";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "postgres";
