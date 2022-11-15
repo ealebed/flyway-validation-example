@@ -100,7 +100,7 @@ docker run \
   -e FLYWAY_USER=${FLYWAY_USER} \
   -e FLYWAY_PASSWORD=${FLYWAY_PASSWORD} \
   -e FLYWAY_URL=${FLYWAY_URL} \
-  flyway/flyway:7.5.2 baseline -baselineVersion=20210201000000 -baselineDescription="Base version"
+  flyway/flyway:9.8.1 baseline -baselineVersion=20210201000000 -baselineDescription="Base version"
 ```
 
 Now we can create migrations and apply them to needed database. I recommend use for creation plugin [Flyway Migration Creation](https://plugins.jetbrains.com/plugin/8597-flyway-migration-creation).
@@ -114,7 +114,7 @@ docker run \
   -e FLYWAY_USER=${FLYWAY_USER} \
   -e FLYWAY_PASSWORD=${FLYWAY_PASSWORD} \
   -e FLYWAY_URL=${FLYWAY_URL} \
-  flyway/flyway:7.5.2 migrate
+  flyway/flyway:9.8.1 migrate
 ```
 
 View details and status information about all the migrations:
@@ -125,7 +125,7 @@ docker run \
   -e FLYWAY_USER=${FLYWAY_USER} \
   -e FLYWAY_PASSWORD=${FLYWAY_PASSWORD} \
   -e FLYWAY_URL=${FLYWAY_URL} \
-  flyway/flyway:7.5.2 info
+  flyway/flyway:9.8.1 info
 ```
 
 :warning::warning::warning:
