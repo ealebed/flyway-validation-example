@@ -23,9 +23,9 @@ resource "google_cloudbuild_trigger" "default" {
     # Example PostgreSQL: jdbc:postgresql://<host>:<port>/<database>?<key1>=<value1>&<key2>=<value2>...
     _FLYWAY_URL      = "jdbc:postgresql://${google_sql_database_instance.main.public_ip_address}:5432/${google_sql_database.database_01.name}"
     # User to use to connect to the database
-    _FLYWAY_USER     = google_sql_user.users.name
+    _FLYWAY_USER     = google_sql_user.flyway.name
     # Password to use to connect to the database
-    _FLYWAY_PASSWORD = google_sql_user.users.password
+    _FLYWAY_PASSWORD = google_sql_user.flyway.password
   }
 
   filename = "cloudbuild.yaml"
