@@ -14,3 +14,8 @@ hs_err_pid*
 build
 .idea
 *.iml
+
+.terraform/
+.terraform*
+.DS_Store
+credentials.json
