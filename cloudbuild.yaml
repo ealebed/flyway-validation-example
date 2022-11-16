@@ -9,9 +9,9 @@ steps:
   - |
     docker run \
     -v $(pwd)/src/test/resources/migrations/database_01:/flyway/sql \
-    -e FLYWAY_USER=${FLYWAY_USER} \
-    -e FLYWAY_PASSWORD=${FLYWAY_PASSWORD} \
-    -e FLYWAY_URL=${FLYWAY_URL} \
+    -e FLYWAY_USER=${_FLYWAY_USER} \
+    -e FLYWAY_PASSWORD=${_FLYWAY_PASSWORD} \
+    -e FLYWAY_URL=${_FLYWAY_URL} \
     flyway/flyway:9.8.1 migrate
 
 options:
