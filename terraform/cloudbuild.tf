@@ -1,14 +1,19 @@
 resource "google_cloudbuild_trigger" "default" {
   location = "global"
-  approval_required  = true
+  
+  // If this is set on a build, it will become pending when it is run, 
+  // and will need to be explicitly approved to start.
+  approval_config {
+     approval_required = true 
+  }
 
   include_build_logs = "INCLUDE_BUILD_LOGS_WITH_STATUS"
   name               = "apply-flyway-migrations"
 
-  github = {
+  github {
     owner  = var.github.organization
     name   = var.github.repo
-    push = {
+    push {
       branch = "^master$"
     }
   }
