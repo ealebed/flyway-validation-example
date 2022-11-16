@@ -19,4 +19,4 @@ CREATE TABLE public.scheduled_reports (
     time_zone character varying
 );
 
-ALTER TABLE public.scheduled_reports OWNER TO test;
+GRANT ALL ON TABLE public.scheduled_reports TO test;

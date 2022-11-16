@@ -1,4 +1,4 @@
-create table traces
+CREATE TABLE traces
 (
     id          serial primary key,
     created_at  timestamp default now(),
