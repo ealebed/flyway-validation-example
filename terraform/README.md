@@ -123,3 +123,4 @@ Next you can manage (create/update/delete) all other terraform resources.
 
 ## TODO: 
 - Move Terraform state to public [Terraform Cloud server](https://app.terraform.io).
+- Configure "native" [Connect from Cloud Build](https://cloud.google.com/sql/docs/postgres/connect-build?authuser=1)

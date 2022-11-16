@@ -1,3 +1,8 @@
+# Granular restriction of network access
+locals {
+  net = ["0.0.0.0/0"]
+}
+
 # Create a new Google SQL Instance
 resource "google_sql_database_instance" "main" {
   name             = "postgres-instance"
@@ -9,14 +14,37 @@ resource "google_sql_database_instance" "main" {
     tier              = "db-f1-micro"
     disk_size         = 10
     availability_type = "ZONAL"
+    ip_configuration {
+      dynamic "authorized_networks" {
+        for_each = local.net
+        iterator = net
+
+        content {
+          name  = "dmz-${net.key}"
+          value = net.value
+        }
+      }
+    }
   }
 }
 
-# Create a new Google SQL User on a Google SQL Instance
-resource "google_sql_user" "users" {
+# Create a new Google SQL Users on a Google SQL Instance
+resource "google_sql_user" "flyway" {
   name     = "flyway"
   instance = google_sql_database_instance.main.name
   password = "changeme"
+}
+
+resource "google_sql_user" "test" {
+  name     = "test"
+  instance = google_sql_database_instance.main.name
+  password = "test"
+}
+
+resource "google_sql_user" "ro_user" {
+  name     = "ro_user"
+  instance = google_sql_database_instance.main.name
+  password = "123321"
 }
 
 # Create SQL database(s) inside the Cloud SQL Instance
