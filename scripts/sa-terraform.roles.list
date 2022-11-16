@@ -1,0 +1,17 @@
+roles/cloudbuild.builds.editor
+roles/cloudbuild.integrationsOwner
+roles/compute.admin
+roles/compute.instanceAdmin
+roles/compute.instanceAdmin.v1
+roles/compute.networkAdmin
+roles/compute.storageAdmin
+roles/iam.serviceAccountAdmin
+roles/iam.serviceAccountKeyAdmin
+roles/iam.serviceAccountTokenCreator
+roles/iam.serviceAccountUser
+roles/resourcemanager.projectIamAdmin
+roles/serviceusage.serviceUsageAdmin
+roles/storage.admin
+roles/storage.objectAdmin
+roles/cloudsql.admin
+

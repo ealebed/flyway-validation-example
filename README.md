@@ -153,3 +153,5 @@ alter table public.statistic add column if not exists io_impressions int4;
 -- Grants connection privilege to users from first step
 GRANT CONNECT ON DATABASE database_01 TO PUBLIC, apireports, clickhouse;
 ```
+
+For Terraform configuration details refer proper [README.md](./terraform/README.md)

@@ -1,0 +1,18 @@
+steps:
+# Applying all the migrations for 'database_01'
+- name: gcr.io/cloud-builders/docker
+  waitFor: ['-']
+  id: 'Apply Flyway Migrations'
+  entrypoint: bash
+  args:
+  - -c
+  - |
+    docker run \
+    -v $(pwd)/src/test/resources/migrations/database_01:/flyway/sql \
+    -e FLYWAY_USER=${FLYWAY_USER} \
+    -e FLYWAY_PASSWORD=${FLYWAY_PASSWORD} \
+    -e FLYWAY_URL=${FLYWAY_URL} \
+    flyway/flyway:9.8.1 migrate
+
+options:
+  logging: CLOUD_LOGGING_ONLY
