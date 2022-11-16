@@ -1,4 +1,5 @@
-CREATE TABLE public.bundles (
+CREATE TABLE bundles
+(
     id integer NOT NULL,
     created_at timestamp without time zone DEFAULT now(),
     updated_at timestamp without time zone DEFAULT now(),
@@ -6,5 +7,4 @@ CREATE TABLE public.bundles (
     modified_by text DEFAULT ''::text
 );
 
-
-ALTER TABLE public.bundles OWNER TO test;
+GRANT ALL ON TABLE public.bundles TO test;
