@@ -3,13 +3,15 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
     val testcontainersVersion = "1.17.5"
+    val jupiterVersion = "5.9.1"
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:${jupiterVersion}")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:${jupiterVersion}")
     testImplementation("org.flywaydb:flyway-core:9.8.1")
     testImplementation("org.postgresql:postgresql:42.5.0")
     testImplementation("org.slf4j:slf4j-simple:2.0.3")

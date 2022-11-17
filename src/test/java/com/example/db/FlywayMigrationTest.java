@@ -1,7 +1,9 @@
-package com.loopme.db;
+package com.example.db;
 
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -21,26 +23,18 @@ public class FlywayMigrationTest {
             .withPassword(PASSWORD)
             .withInitScript(INIT_SCRIPT_PATH);
 
-    @Test
-    public void runDB1Migrations() {
-        container.withDatabaseName("database_01");
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "database_01",
+        "database_02"
+    })
+    public void runMigrations(String databaseName) {
+        container.withDatabaseName(databaseName);
         var flyway = Flyway.configure()
-                .locations("migrations/database_01/")
-                .schemas("public")
-                .dataSource(container.getJdbcUrl(), container.getUsername(), container.getPassword())
-                .load();
-        flyway.info();
-        flyway.migrate();
-    }
-
-    @Test
-    public void runDB2Migrations() {
-        container.withDatabaseName("database_02");
-        var flyway = Flyway.configure()
-                .locations("migrations/database_02/")
-                .schemas("public")
-                .dataSource(container.getJdbcUrl(), container.getUsername(), container.getPassword())
-                .load();
+            .locations("migrations/%s/".formatted(databaseName))
+            .schemas("public")
+            .dataSource(container.getJdbcUrl(), container.getUsername(), container.getPassword())
+            .load();
         flyway.info();
         flyway.migrate();
     }
