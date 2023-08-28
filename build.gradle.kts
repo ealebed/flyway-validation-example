@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    val testcontainersVersion = "1.18.3"
+    val testcontainersVersion = "1.19.0"
     val jupiterVersion = "5.10.0"
 
     testImplementation("org.junit.jupiter:junit-jupiter:${jupiterVersion}")
