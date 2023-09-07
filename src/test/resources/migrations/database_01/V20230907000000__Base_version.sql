@@ -1,4 +1,4 @@
-CREATE TABLE bundles
+CREATE TABLE public.bundles
 (
     id integer NOT NULL,
     created_at timestamp without time zone DEFAULT now(),

@@ -1,7 +1,6 @@
 package com.example.db;
 
 import org.flywaydb.core.Flyway;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -10,7 +9,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 public class FlywayMigrationTest {
-    private static final String DOCKER_IMAGE = "postgres:14";
+    private static final String DOCKER_IMAGE = "postgres:15";
     private static final String DB_NAME = "postgres";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "postgres";
