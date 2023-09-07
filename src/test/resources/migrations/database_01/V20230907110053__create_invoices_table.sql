@@ -1,4 +1,4 @@
-CREATE TABLE traces
+CREATE TABLE public.invoices
 (
     id          serial primary key,
     created_at  timestamp default now(),
@@ -7,4 +7,4 @@ CREATE TABLE traces
     json_data   jsonb     default '{}'::jsonb
 );
 
-GRANT ALL ON TABLE public.traces TO test;
+GRANT ALL ON TABLE public.invoices TO test;

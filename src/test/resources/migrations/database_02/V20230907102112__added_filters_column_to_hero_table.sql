@@ -1,2 +1,2 @@
-ALTER TABLE scheduled_reports
+ALTER TABLE public.hero
     ADD COLUMN IF NOT EXISTS filters VARCHAR;
