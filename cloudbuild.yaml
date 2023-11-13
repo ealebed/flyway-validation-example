@@ -12,6 +12,7 @@ steps:
     -e FLYWAY_USER=${_FLYWAY_USER} \
     -e FLYWAY_PASSWORD=${_FLYWAY_PASSWORD} \
     -e FLYWAY_URL=${_FLYWAY_URL} \
+    -e FLYWAY_LOCATIONS=filesystem:/flyway/sql \
     flyway/flyway:10.0 migrate
 
 options:
