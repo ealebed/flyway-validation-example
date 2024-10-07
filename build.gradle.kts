@@ -8,7 +8,7 @@ repositories {
 
 dependencies {
     val flywayVersion = "10.18.2"
-    val testcontainersVersion = "1.20.1"
+    val testcontainersVersion = "1.20.2"
     val jupiterVersion = "5.11.1"
 
     testImplementation("org.junit.jupiter:junit-jupiter:${jupiterVersion}")
