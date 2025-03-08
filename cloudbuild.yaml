@@ -13,7 +13,7 @@ steps:
     -e FLYWAY_PASSWORD=${_FLYWAY_PASSWORD} \
     -e FLYWAY_URL=${_FLYWAY_URL} \
     -e FLYWAY_LOCATIONS=filesystem:/flyway/sql \
-    flyway/flyway:10.0 migrate
+    flyway/flyway:11.3 migrate
 
 options:
   logging: CLOUD_LOGGING_ONLY
