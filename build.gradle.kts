@@ -9,7 +9,8 @@ repositories {
 dependencies {
     val flywayVersion = "11.3.4"
     val testcontainersVersion = "1.20.5"
-    val jupiterVersion = "5.11.4"
+    val jupiterVersion = "5.12.0"
+    val platformVersion = "1.12.0"
 
     testImplementation("org.junit.jupiter:junit-jupiter:${jupiterVersion}")
     testImplementation("org.junit.jupiter:junit-jupiter-params:${jupiterVersion}")
@@ -20,6 +21,9 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter:${testcontainersVersion}")
     testImplementation("org.testcontainers:postgresql:${testcontainersVersion}")
     testImplementation("org.testcontainers:testcontainers:${testcontainersVersion}")
+
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:${platformVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}")
 }
 
 tasks.test {
