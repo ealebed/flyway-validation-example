@@ -17,7 +17,7 @@ public class FlywayMigrationTest {
 
   @Container
   private static PostgreSQLContainer container =
-      new PostgreSQLContainer<>(DOCKER_IMAGE)
+      new PostgreSQLContainer(DOCKER_IMAGE)
           .withDatabaseName(DB_NAME)
           .withUsername(USERNAME)
           .withPassword(PASSWORD)
