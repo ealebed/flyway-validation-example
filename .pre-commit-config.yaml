@@ -1,0 +1,64 @@
+# Pre-commit hooks configuration
+# Install with: pre-commit install
+# Run manually: pre-commit run --all-files
+
+repos:
+  # General file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '\.(md|sql)$'  # Allow trailing whitespace in markdown and SQL
+      - id: end-of-file-fixer
+        exclude: '\.(md|sql)$'
+      - id: check-yaml
+        args: [--unsafe]  # Allow custom YAML tags
+      - id: check-json
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+
+  # Java code formatting with Spotless (via Gradle)
+  - repo: local
+    hooks:
+      - id: spotless-check
+        name: Spotless Check
+        entry: bash -c './gradlew spotlessCheck'
+        language: system
+        types: [java]
+        pass_filenames: false
+        always_run: true
+        # Note: To auto-format, run: ./gradlew spotlessApply
+
+  # Terraform formatting
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.87.1
+    hooks:
+      - id: terraform_fmt
+        args: ['-recursive']
+      - id: terraform_validate
+        args: ['-recursive']
+      - id: terraform_docs
+        args: ['--hook-config=--path-to-file=README.md', '--hook-config=--add-to-existing-file=true', '--hook-config=--create-file-if-not-exist=true']
+        exclude: '^terraform/backend\.tf$'  # Exclude backend.tf from docs generation
+
+  # Gradle wrapper validation
+  - repo: local
+    hooks:
+      - id: gradle-wrapper
+        name: Validate Gradle Wrapper
+        entry: bash -c './gradlew wrapper --gradle-version $(grep distributionUrl gradle/wrapper/gradle-wrapper.properties | cut -d"/" -f5 | cut -d"-" -f1) --warning-mode all || echo "Gradle wrapper validation skipped"'
+        language: system
+        files: 'gradle/wrapper/gradle-wrapper\.properties'
+        pass_filenames: false
+
+  # YAML formatting (for GitHub Actions, Cloud Build, etc.)
+  - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+    rev: v2.15.0
+    hooks:
+      - id: pretty-format-yaml
+        args: ['--autofix', '--indent', '2']
+        exclude: '^\.pre-commit-config\.yaml$'  # Don't format pre-commit config itself

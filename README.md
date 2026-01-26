@@ -155,3 +155,124 @@ GRANT CONNECT ON DATABASE database_01 TO PUBLIC, apireports, clickhouse;
 ```
 
 For Terraform configuration details refer proper [README.md](./terraform/README.md)
+
+# Pre-commit Hooks Setup
+
+This project uses [pre-commit](https://pre-commit.com/) to ensure code quality and consistency before commits.
+
+## Installation
+
+1. Install pre-commit (if not already installed):
+   ```bash
+   # Using pip
+   pip install pre-commit
+   
+   # Using Homebrew (macOS)
+   brew install pre-commit
+   
+   # Using conda
+   conda install -c conda-forge pre-commit
+   ```
+
+2. Install the git hooks:
+   ```bash
+   pre-commit install
+   ```
+
+3. (Optional) Install hooks to run on push as well:
+   ```bash
+   pre-commit install --hook-type pre-push
+   ```
+
+## Usage
+
+### Automatic Execution
+Hooks run automatically on `git commit`. If any hook fails, the commit will be blocked.
+
+### Manual Execution
+Run all hooks on all files:
+```bash
+pre-commit run --all-files
+```
+
+Run a specific hook:
+```bash
+pre-commit run <hook-id>
+```
+
+### Bypassing Hooks (Not Recommended)
+If you need to bypass hooks in an emergency:
+```bash
+git commit --no-verify
+```
+
+## Configured Hooks
+
+### General File Checks
+- **trailing-whitespace**: Removes trailing whitespace
+- **end-of-file-fixer**: Ensures files end with a newline
+- **check-yaml**: Validates YAML syntax
+- **check-json**: Validates JSON syntax
+- **check-added-large-files**: Prevents committing large files (>1MB)
+- **check-merge-conflict**: Detects merge conflict markers
+- **check-case-conflict**: Detects case conflicts in filenames
+- **mixed-line-ending**: Normalizes line endings to LF
+
+### Java Code Formatting
+- **spotless-check**: Validates Java code formatting (runs on commit)
+- **spotless-apply**: Applies formatting automatically (manual only)
+
+To format code manually:
+```bash
+./gradlew spotlessApply
+```
+
+To check formatting:
+```bash
+./gradlew spotlessCheck
+```
+
+### Terraform
+- **terraform_fmt**: Formats Terraform files
+- **terraform_validate**: Validates Terraform syntax
+- **terraform_docs**: Updates Terraform documentation
+
+### YAML Formatting
+- **pretty-format-yaml**: Formats YAML files (GitHub Actions, Cloud Build, etc.)
+
+## CI Integration
+
+The CI pipeline (`.github/workflows/gradle.yml`) runs the same checks:
+- `spotlessCheck` - Validates code formatting
+- `build` - Compiles the project
+- `test` - Runs all tests
+
+This ensures consistency between local development and CI.
+
+## Troubleshooting
+
+### Hook fails but code looks fine
+Run the formatter manually:
+```bash
+./gradlew spotlessApply
+git add .
+```
+
+### Pre-commit not running
+Verify installation:
+```bash
+pre-commit --version
+pre-commit install
+```
+
+### Terraform hooks failing
+Ensure Terraform is installed:
+```bash
+terraform version
+```
+
+### Updating hook versions
+Edit `.pre-commit-config.yaml` and run:
+```bash
+pre-commit autoupdate
+```
