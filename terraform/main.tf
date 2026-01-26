@@ -12,9 +12,9 @@ terraform {
 provider "google" {
   credentials = file("../credentials.json")
 
-  project     = var.gcp_project
-  region      = var.gcp_region
-  zone        = var.gcp_zone
+  project = var.gcp_project
+  region  = var.gcp_region
+  zone    = var.gcp_zone
 }
 
 data "google_project" "project" {}

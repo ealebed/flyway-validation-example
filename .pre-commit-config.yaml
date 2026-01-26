@@ -38,12 +38,8 @@ repos:
     rev: v1.87.1
     hooks:
       - id: terraform_fmt
-        args: ['-recursive']
-      - id: terraform_validate
-        args: ['-recursive']
-      - id: terraform_docs
-        args: ['--hook-config=--path-to-file=README.md', '--hook-config=--add-to-existing-file=true', '--hook-config=--create-file-if-not-exist=true']
-        exclude: '^terraform/backend\.tf$'  # Exclude backend.tf from docs generation
+      # terraform_validate is skipped in pre-commit (requires credentials file)
+      # Validation runs in CI instead
 
   # Gradle wrapper validation
   - repo: local
