@@ -1,0 +1,83 @@
+# Terraform validation workflow
+# Validates Terraform configuration when terraform files are changed
+
+name: Terraform Validation
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+    - terraform/**
+    - .github/workflows/terraform.yml
+
+jobs:
+  terraform-validate:
+    name: Terraform Validate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.9.0
+        terraform_wrapper: false
+
+    - name: Terraform Format Check
+      id: fmt
+      run: terraform fmt -check -recursive
+      continue-on-error: true
+
+    - name: Create dummy credentials file
+        # Terraform validation doesn't need real credentials, but file() function requires file to exist
+      run: |
+        mkdir -p ..
+        echo '{"type": "service_account"}' > ../credentials.json
+
+    - name: Terraform Init
+      id: init
+      run: terraform init -backend=false
+      env:
+          # Set dummy values for variables to allow validation without actual GCP credentials
+        TF_VAR_gcp_project: dummy-project
+        TF_VAR_gcp_region: us-central1
+        TF_VAR_gcp_zone: us-central1-a
+          # Use environment variable instead of file for credentials (if supported)
+        GOOGLE_APPLICATION_CREDENTIALS: ../credentials.json
+
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate -no-color
+      env:
+        TF_VAR_gcp_project: dummy-project
+        TF_VAR_gcp_region: us-central1
+        TF_VAR_gcp_zone: us-central1-a
+        GOOGLE_APPLICATION_CREDENTIALS: ../credentials.json
+
+    - name: Check Format Status
+      if: steps.fmt.outcome == 'failure'
+      run: |
+        echo "::error::Terraform files are not properly formatted. Run 'terraform fmt -recursive' to fix."
+        exit 1
+
+    - name: Scan module with Checkov
+      uses: bridgecrewio/checkov-action@v12
+      with:
+        directory: ./terraform
+        quiet: false
+        soft_fail: false
+        compact: false
+          # Skipped checks:
+          # CKV_SECRET_4 - Password is not hardcoded; value is injected from Terraform variables
+          # CKV_GCP_55 - PostgreSQL log levels - known false positive, fails even with recommended values
+          # CKV_GCP_109 - PostgreSQL database flags - known false positive, fails even with recommended values
+          # CKV_GCP_125 - GitHub Actions OIDC Trust Policy - check has issues, goes against Google's published best practices
+        skip_check: CKV_SECRET_4,CKV_GCP_55,CKV_GCP_109,CKV_GCP_125
+        framework: terraform
+        output_format: cli
+        download_external_modules: true

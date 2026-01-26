@@ -114,11 +114,73 @@ Next you can manage (create/update/delete) all other terraform resources.
 - Mark security agreement checkbox and press "Connect" button.
 - Finish this process without creating triggers.
 
+## CI/CD Validation
+
+This repository includes automated validation for Terraform code through GitHub Actions:
+
+### Terraform Validation Workflow
+
+When Terraform files are modified in a pull request, the following checks run automatically:
+
+1. **Terraform Format Check** - Ensures all `.tf` files are properly formatted using `terraform fmt`
+2. **Terraform Init** - Initializes Terraform with providers (without backend)
+3. **Terraform Validate** - Validates syntax and configuration correctness
+4. **Checkov Security Scan** - Scans for security misconfigurations and compliance issues
+
+The validation workflow runs on:
+- Pull requests targeting the `master` branch
+- Any changes to files in the `terraform/` directory
+
+### Checkov Security Scanning
+
+[Checkov](https://www.checkov.io/) is a static code analysis tool that scans Terraform configurations for security and compliance issues. The workflow uses `bridgecrewio/checkov-action@v12` to automatically scan all Terraform files.
+
+**Skipped Checks:**
+- `CKV_SECRET_4` - Passwords are managed via variables, not hardcoded
+- `CKV_GCP_55` - PostgreSQL log levels (known false positive)
+- `CKV_GCP_109` - PostgreSQL database flags (known false positive)
+- `CKV_GCP_125` - GitHub Actions OIDC Trust Policy (check has implementation issues)
+
+To skip additional checks inline in your code, use:
+```hcl
+# checkov:skip=CKV_GCP_XX:Reason for skipping
+```
+
+For more information, see [Checkov documentation](https://www.checkov.io/2.Basics/Suppressing%20and%20Skipping%20Policies.html).
+
+### Running Validation Locally
+
+You can run the same validation checks locally:
+
+```bash
+# Format check
+terraform fmt -check -recursive
+
+# Format files automatically
+terraform fmt -recursive
+
+# Initialize (without backend)
+terraform init -backend=false
+
+# Validate
+terraform validate
+```
+
+For Checkov scanning:
+```bash
+# Install Checkov
+pip install checkov
+
+# Run scan
+checkov -d ./terraform --framework terraform
+```
+
 ## Useful links:
 - [Terraform resource samples](https://github.com/terraform-google-modules/terraform-docs-samples)
 - [Terraform blueprints catalog](https://cloud.google.com/docs/terraform/blueprints/terraform-blueprints)
 - [Best practices for using Terraform](https://cloud.google.com/docs/terraform/best-practices-for-terraform)
 - [Google Cloud Platform Provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs)
+- [Checkov Documentation](https://www.checkov.io/)
 
 
 ## TODO: 
