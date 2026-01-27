@@ -56,7 +56,7 @@ resource "google_sql_database_instance" "main" {
     }
 
     ip_configuration {
-      require_ssl = true
+      ssl_mode = "ENCRYPTED_ONLY"
       dynamic "authorized_networks" {
         for_each = local.net
         iterator = net
