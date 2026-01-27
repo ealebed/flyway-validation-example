@@ -5,6 +5,8 @@ locals {
 
 # Create a new Google SQL Instance
 resource "google_sql_database_instance" "main" {
+  # checkov:skip=CKV_GCP_79:POSTGRES_14 is sufficient for this example
+  # checkov:skip=CKV_GCP_110:pgAudit not needed for this simple example
   name             = "postgres-instance"
   region           = var.gcp_region
   project          = var.gcp_project
@@ -17,7 +19,44 @@ resource "google_sql_database_instance" "main" {
     tier              = "db-f1-micro"
     disk_size         = 10
     availability_type = "ZONAL"
+
+    backup_configuration {
+      enabled                        = true
+      start_time                     = "03:00"
+      point_in_time_recovery_enabled = true
+    }
+
+    database_flags {
+      name  = "log_checkpoints"
+      value = "on"
+    }
+    database_flags {
+      name  = "log_connections"
+      value = "on"
+    }
+    database_flags {
+      name  = "log_disconnections"
+      value = "on"
+    }
+    database_flags {
+      name  = "log_lock_waits"
+      value = "on"
+    }
+    database_flags {
+      name  = "log_duration"
+      value = "on"
+    }
+    database_flags {
+      name  = "log_hostname"
+      value = "on"
+    }
+    database_flags {
+      name  = "log_statement"
+      value = "all"
+    }
+
     ip_configuration {
+      require_ssl = true
       dynamic "authorized_networks" {
         for_each = local.net
         iterator = net
