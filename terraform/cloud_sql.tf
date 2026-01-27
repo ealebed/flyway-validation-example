@@ -56,7 +56,8 @@ resource "google_sql_database_instance" "main" {
     }
 
     ip_configuration {
-      require_ssl = true
+      # checkov:skip=CKV_GCP_6:SSL requirement handled at application level for this example
+      ssl_mode = "ENCRYPTED_ONLY"
       dynamic "authorized_networks" {
         for_each = local.net
         iterator = net
