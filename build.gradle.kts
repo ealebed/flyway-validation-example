@@ -1,6 +1,6 @@
 plugins {
     java
-    id("com.diffplug.spotless") version "8.4.0"
+    id("com.diffplug.spotless") version "8.5.0"
 }
 
 repositories {
