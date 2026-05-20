@@ -11,7 +11,7 @@ dependencies {
     val flywayVersion = "12.6.1"
     val testcontainersVersion = "2.0.5"
     val jupiterVersion = "6.0.3"
-    val platformVersion = "6.0.3"
+    val platformVersion = "6.1.0"
 
     testImplementation("org.junit.jupiter:junit-jupiter:$jupiterVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$jupiterVersion")
