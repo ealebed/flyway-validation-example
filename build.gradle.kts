@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    val flywayVersion = "12.7.0"
+    val flywayVersion = "12.8.0"
     val testcontainersVersion = "2.0.5"
     val jupiterVersion = "6.1.0"
     val platformVersion = "6.1.0"
