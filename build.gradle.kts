@@ -1,6 +1,6 @@
 plugins {
     java
-    id("com.diffplug.spotless") version "8.10.0"
+    id("com.diffplug.spotless") version "8.10.2"
 }
 
 repositories {
@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    val flywayVersion = "13.3.0"
+    val flywayVersion = "13.5.0"
     val testcontainersVersion = "2.0.5"
     val jupiterVersion = "6.1.3"
     val platformVersion = "6.1.3"
@@ -18,7 +18,7 @@ dependencies {
     testImplementation("org.flywaydb:flyway-core:$flywayVersion")
     testImplementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
     testImplementation("org.postgresql:postgresql:42.7.13")
-    testImplementation("org.slf4j:slf4j-simple:2.0.18")
+    testImplementation("org.slf4j:slf4j-simple:2.0.19")
     testImplementation("org.testcontainers:testcontainers-junit-jupiter:$testcontainersVersion")
     testImplementation("org.testcontainers:testcontainers-postgresql:$testcontainersVersion")
     testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
