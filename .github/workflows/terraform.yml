@@ -1,14 +1,11 @@
 # Terraform validation workflow
-# Validates Terraform configuration when terraform files are changed
+# Always runs on PRs so `Terraform Validate` can be a required merge check.
 
 name: Terraform Validation
 
 on:
   pull_request:
     branches: [master]
-    paths:
-    - terraform/**
-    - .github/workflows/terraform.yml
 
 jobs:
   terraform-validate:

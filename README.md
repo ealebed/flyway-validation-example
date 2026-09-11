@@ -242,12 +242,17 @@ To check formatting:
 
 ## CI Integration
 
-The CI pipeline (`.github/workflows/gradle.yml`) runs the same checks:
-- `spotlessCheck` - Validates code formatting
-- `build` - Compiles the project
-- `test` - Runs all tests
+The CI pipeline runs:
+
+- [Java CI with Gradle](.github/workflows/gradle.yml): `spotlessCheck` and `test` (job `build`)
+- [Terraform Validation](.github/workflows/terraform.yml): fmt, `terraform validate`, and Checkov (job `Terraform Validate`)
+
+Both jobs run on every pull request so they can be required merge checks.
 
 This ensures consistency between local development and CI.
+
+## Dependabot automation
+Minor and patch Dependabot PRs are approved and squash-merged by a GitHub App after required CI passes. See [Dependabot automation](./docs/dependabot-automation.md).
 
 ## Troubleshooting
 
